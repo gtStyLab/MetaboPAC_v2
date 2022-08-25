@@ -28,7 +28,7 @@ for rep = 1:1:5
     for rand_idx = 1:1:10
         idx = (rep - 1) * 10 + rand_idx; 
         ecoli_fileName = sprintf('results/ecoli_MetaboPAC_KE_addKinetics-100_rep-%03d_rand-%03d',rep,rand_idx);
-        yeast_fileName = sprintf('results/yeast_MetaboPAC_KE_k-01_addKinetics-100_rep-%03d_rand-%03d',rep,rand_idx);
+        yeast_fileName = sprintf('results/yeast_MetaboPAC_k-01_addKinetics-100_rep-%03d_rand-%03d',rep,rand_idx);
         ecoli_results_file = load(ecoli_fileName); 
         predicted_RF_ecoli = ecoli_results_file.predicted_responseFactors;
         yeast_results_file = load(yeast_fileName); 
@@ -82,11 +82,11 @@ end
 errorbar(x',avg_count,standard_error,'k','linestyle','none');
 hold off
 
-legend('Determined','UDreg','ecoli','yeast','Location','bestoutside')
+legend('Determined','Underdetermined with Regulation','E. coli','S. cerevisiae','Location','bestoutside')
 hold on 
-ylim([0 110]) 
+ylim([0 120]) 
 ylabel({'percentage of response factors','predicted within error range'})
-title({'100% known kinetics - KE approach'})
+% title({'100% known kinetics - KE approach'})
 set(gca,'FontSize',14)
 
 

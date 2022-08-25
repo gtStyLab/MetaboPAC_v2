@@ -96,7 +96,6 @@ if length(knownMet) ~= numMetabs
         rng(i)
         % Set initial seed for optimizier
         x0 = (maxRandVal-minRandVal).*rand(1,numMetabs-length(knownMet)) + minRandVal;
-%         ga_options = optimoptions('ga','MaxTime',30,'InitialPopulationMatrix',x0);
         ga_options = optimoptions('ga','MaxGenerations',100,'InitialPopulationMatrix',x0,'Display','iter');
         % Perform genetic algorithm optimization
         [optimalRF fval(i,1)] = ga(@(testRF) calcPenalty(testRF,modelInfo,relative_Vpool,numMetabs,numFlux,MA_reactions,relative_concMatrix,timeVec,fluxTimeVec,RF_kinetics,knownMet,knownKinetics,rep),numMetabs-length(knownMet),[],[],[],[],lb,ub,[],ga_options);
@@ -173,8 +172,7 @@ function penalty = calcPenalty(testRF,modelInfo,relative_Vpool,numMetabs,numFlux
         ss_penalty = pen_devSSdist_yeast(Vcalc(:,1:numFlux));
         
         % Calculate BST fit penalty
-        nT = size(absolute_concMatrix,1)-1;
-        BST_penalty = pen_BSTfit_hynne_updated(absolute_concMatrix,Vcalc);
+        BST_penalty = pen_BSTfit_hynne(absolute_concMatrix,Vcalc);
         
         % Calculate total penalty
         penalty = 1000 * abs(massbalance_penalty) + 10 * abs(conc_penalty) + abs(oneContMetCorr_penalty) + 10 * abs(oneContMetCurveFit_penalty) + 10 * abs(BST_penalty) + 0.1 * ss_penalty;

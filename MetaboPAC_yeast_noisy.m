@@ -148,8 +148,7 @@ function penalty = calcPenalty(testRF,modelInfo,relative_Vpool,numMetabs,numFlux
         oneContMetCurveFit_penalty = pen_oneContMetCurveFit_hynne(absolute_concMatrix,Vcalc,timeVec,fluxTimeVec);
 
         % Calculate BST fit penalty
-        nT = size(absolute_concMatrix,1)-1;
-        BST_penalty = pen_BSTfit_hynne_updated(absolute_concMatrix,Vcalc);
+        BST_penalty = pen_BSTfit_hynne(absolute_concMatrix,Vcalc);
         
         %Calculate steady state penalty
         ss_penalty = pen_devSSdist_yeast(Vcalc(:,1:numFlux));
